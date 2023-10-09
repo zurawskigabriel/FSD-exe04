@@ -26,32 +26,8 @@ public class Endpoints {
 	@GetMapping("/makeSell")
     @CrossOrigin(origins = "*")
 	public double makeSell(@RequestParam(value = "code") String code, @RequestParam(value = "amount") int amount) {
-
-		Product product = StockRepository.getInstance().listAll().stream()
-					  								   .filter(p -> p.getCode().equals(code))
-					  								   .findFirst()
-					  								   .get();
-								
-		if(product.getAmount() < amount) {
-			return -1;
-		}
-
-		// Tem que atualizar o estoque!!!
-		StockRepository.getInstance().updateProductAmount(code, product.getAmount() - amount);
-
-		double total = product.getPrice() * amount;
-		CalculateTax tax = new CalculateTax(new TaxBySell());
-		double taxValue = tax.calculate(total);
-
-		if(amount > 10){
-			CalculateDiscount discount = new CalculateDiscount(new DiscountByAmount());
-			double discountValue = discount.calculate(total);
-			return total + taxValue - discountValue;
-		}
-
-		return total + taxValue;
-
-
+		Sell sell = new Sell();
+		return sell.makeSell(code, amount);
 	}
 
 	@GetMapping("/addStock")
