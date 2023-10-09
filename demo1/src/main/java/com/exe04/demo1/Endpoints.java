@@ -4,8 +4,9 @@ import java.util.List;
 
 public class Endpoints {
 
+
 	public List<Product> catalog() {
-		return null;
+		return StockRepository.getInstance().listAll();
 	}
 
 	public double makeSell(String code, int amount) {
