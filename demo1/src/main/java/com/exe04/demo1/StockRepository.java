@@ -43,8 +43,28 @@ public class StockRepository {
 		products.add(product);
 	}
 
-	public void updateProduct(Product produto) {
+	public void updateProductCode(String oldCode, String newCode) {
+		products.stream()
+				.filter(product -> product.getCode().equals(oldCode))
+				.forEach(product -> {product.setCode(newCode);});
+	}
 
+	public void updateProductDescription(String code, String newDescripiton) {
+		products.stream()
+				.filter(product -> product.getCode().equals(code))
+				.forEach(product -> {product.setDescription(newDescripiton);});
+	}
+
+	public void updateProductPrice(String code, double newPrice) {
+		products.stream()
+				.filter(product -> product.getCode().equals(code))
+				.forEach(product -> {product.setPrice(newPrice);});
+	}
+
+	public void updateProductAmount(String code, int newAmount) {
+		products.stream()
+				.filter(product -> product.getCode().equals(code))
+				.forEach(product -> {product.setAmount(newAmount);});
 	}
 
 	public List<String> lowStock() {
